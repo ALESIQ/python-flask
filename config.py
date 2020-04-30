@@ -8,6 +8,9 @@ class Config(object):
         os.path.abspath(__file__)), 'templates')
     ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
     APP = None
+    host = 'mysql+mysqldb://root:123456@localhost:3306/livro_flask'
+    SQLALCHEMY_DATABASE_URI = host
+    ENDGRID_API_KEY = 'API_KEY'
 
 
 class DevelopmnetConfig(Config):
