@@ -1,4 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func, desc, asc, distinct, and_, or_
+from sqlalchemy.orm import relationship
 from config import app_active, app_config
 from model.User import User
 from model.Category import Category
@@ -24,3 +26,5 @@ class Product(db.Model):
         db.Integer, db.ForeignKey(User.id), nullable=False)
     category = db.Column(db.Integer, db.ForeignKey(
         Category.id), nullable=False)
+    usuario = relationship(User)
+    categoria = relationship(Category)
