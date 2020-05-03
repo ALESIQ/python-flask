@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func
 from sqlalchemy.orm import relationship
 from config import app_active, app_config
 from passlib.hash import pbkdf2_sha256
@@ -27,41 +28,49 @@ class User(db.Model):
     def __repr__(self):
         return '%s - %s' % (self.id, self.username)
 
+    def get_user_by_email(self):
+        """
+            Construiremos essa função capítulos depois
+        """
+        return ''
 
-def get_user_by_email(self):
-    """
-        Construiremos essa função capítulos depois
-    """
-    return ''
+    def get_user_by_id(self):
+        try:
+            res = db.session.query(User).filter(User.id == self.id).first()
+        except Exception as e:
+            res = None
+            print(e)
+        finally:
+            db.session.close()
+            return res
 
+    def update(self, obj):
+        """
+            Construiremos essa função capítulos depois
+        """
+        return ''
 
-def get_user_by_id(self):
-    """
-        Construiremos essa função capítulos depois
-    """
-    return ''
+    def hash_password(self, password):
+        try:
+            return pbkdf2_sha256.hash(password)
+        except Exception as e:
+            print(f'Erro ao criptografar senha {e}')
 
+    def set_password(self, password):
+        self.password = pbkdf2_sha256.hash(password)
 
-def update(self, obj):
-    """
-        Construiremos essa função capítulos depois
-    """
-    return ''
+    def verify_password(self, password_no_hash, password_database):
+        try:
+            return pbkdf2_sha256.verify(password_no_hash, password_database)
+        except ValueError:
+            return False
 
-
-def hash_password(self, password):
-    try:
-        return pbkdf2_sha256.hash(password)
-    except Exception as e:
-        print(f'Erro ao criptografar senha {e}')
-
-
-def set_password(self, password):
-    self.password = pbkdf2_sha256.hash(password)
-
-
-def verify_password(self, password_no_hash, password_database):
-    try:
-        return pbkdf2_sha256.verify(password_no_hash, password_database)
-    except ValueError:
-        return False
+    def get_total_users(self):
+        try:
+            res = db.session.query(func.count(User.id)).first()
+        except Exception as e:
+            res = []
+            print(e)
+        finally:
+            db.session.close()
+            return res

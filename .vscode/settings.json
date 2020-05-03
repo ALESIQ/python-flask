@@ -1,6 +1,6 @@
 {
-    "python.pythonPath": "d:\\Cursos\\Python\\python-flask\\.venv\\Scripts\\python.exe",
     "python.linting.flake8Enabled": true,
     "python.linting.pylintEnabled": false,
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    "python.pythonPath": ".venv\\Scripts\\python.exe"
 }
